@@ -1,16 +1,11 @@
-import { useState } from 'react';
+import { auth } from '../firebase';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+
 const SignUp = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log(email, password);
-  };
-  const handleChangeEmail = (event) => {
-    setEmail(event.currentTarget.value);
-  };
-  const handleChangePassword = (event) => {
-    setPassword(event.currentTarget.value);
+    const { email, password } = event.target.elements;
+    createUserWithEmailAndPassword(auth, email.value, password.value);
   };
 
   return (
@@ -18,22 +13,12 @@ const SignUp = () => {
       <h1>ユーザ登録</h1>
       <form onSubmit={handleSubmit}>
         <div>
-          <label>メールアドレス</label>
-          <input
-            name="email"
-            type="email"
-            placeholder="email"
-            onChange={(event) => handleChangeEmail(event)}
-          />
+          <label htmlFor="email">メールアドレス</label>
+          <input id="email" name="email" type="email" placeholder="email" />
         </div>
         <div>
-          <label>パスワード</label>
-          <input
-            name="password"
-            type="password"
-            placeholder="password"
-            onChange={(event) => handleChangePassword(event)}
-          />
+          <label htmlFor="password">パスワード</label>
+          <input id="password" name="password" type="password" />
         </div>
         <div>
           <button>登録</button>
